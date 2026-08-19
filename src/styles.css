@@ -142,3 +142,71 @@
     color: var(--color-foreground);
   }
 }
+
+/* ===== SAI BHAWANI CHS LTD design system ===== */
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.28 0.02 264);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.28 0.02 264);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.28 0.02 264);
+  /* Navy #0F2D52 */
+  --primary: oklch(0.31 0.078 259);
+  --primary-foreground: oklch(1 0 0);
+  /* Gold #D4AF37 */
+  --accent: oklch(0.77 0.13 90);
+  --accent-foreground: oklch(0.31 0.078 259);
+  /* Light gray #F8F9FA */
+  --secondary: oklch(0.982 0.002 247);
+  --secondary-foreground: oklch(0.31 0.078 259);
+  --muted: oklch(0.982 0.002 247);
+  --muted-foreground: oklch(0.48 0.02 264);
+  --border: oklch(0.92 0.006 255);
+  --input: oklch(0.92 0.006 255);
+  --ring: oklch(0.31 0.078 259);
+  --radius: 0.75rem;
+  --shadow-card: 0 1px 2px rgba(15, 45, 82, 0.04), 0 8px 24px -12px rgba(15, 45, 82, 0.18);
+}
+
+@theme inline {
+  --font-heading: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Poppins", system-ui, sans-serif;
+  --shadow-card: var(--shadow-card);
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    letter-spacing: 0.01em;
+  }
+}
+
+@keyframes intro-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes intro-line {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes soft-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@utility animate-rise {
+  animation: intro-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@utility animate-line {
+  animation: intro-line 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+  transform-origin: center;
+}
+@utility animate-soft-fade {
+  animation: soft-fade 0.5s ease-out both;
+}
