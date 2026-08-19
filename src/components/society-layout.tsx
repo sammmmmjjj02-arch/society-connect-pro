@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate, type LinkProps } from "@tanstack/react-router";
 import logo from "@/assets/website_logo.svg.asset.json";
 import { Badge, Button, PageContainer } from "@/components/kit";
 import { cn } from "@/lib/utils";
