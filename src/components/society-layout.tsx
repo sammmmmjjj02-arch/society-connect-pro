@@ -14,7 +14,12 @@ export function SocietyLogo({ className }: { className?: string }) {
   );
 }
 
-export type NavItem = { label: string; enabled?: boolean };
+export type NavItem = { label: string; to?: LinkProps["to"]; exact?: boolean };
+
+const navItemClass =
+  "block w-full rounded-lg px-4 py-3 text-left text-base font-medium transition-colors";
+const navInactive = "text-muted-foreground hover:bg-secondary hover:text-foreground";
+const navActive = "bg-primary text-primary-foreground";
 
 export function DashboardLayout({
   role,
@@ -29,21 +34,28 @@ export function DashboardLayout({
   const navigate = useNavigate();
 
   const nav = (
-    <nav className="space-y-1">
-      {navItems.map((item, i) => (
-        <button
-          key={item.label}
-          type="button"
-          className={cn(
-            "w-full rounded-lg px-4 py-3 text-left text-sm font-medium transition-colors",
-            i === 0
-              ? "bg-primary text-primary-foreground"
-              : "text-muted-foreground hover:bg-secondary hover:text-foreground",
-          )}
-        >
-          {item.label}
-        </button>
-      ))}
+    <nav className="space-y-1" onClick={() => setOpen(false)}>
+      {navItems.map((item, i) =>
+        item.to ? (
+          <Link
+            key={item.label}
+            to={item.to}
+            activeOptions={{ exact: item.exact ?? false }}
+            className={cn(navItemClass, navInactive)}
+            activeProps={{ className: cn(navItemClass, navActive) }}
+          >
+            {item.label}
+          </Link>
+        ) : (
+          <button
+            key={item.label}
+            type="button"
+            className={cn(navItemClass, i === 0 ? navActive : navInactive)}
+          >
+            {item.label}
+          </button>
+        ),
+      )}
     </nav>
   );
 
