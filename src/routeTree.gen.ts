@@ -14,6 +14,8 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ResidentRouteImport } from './routes/resident'
 import { Route as WatchmanRouteImport } from './routes/watchman'
+import { Route as ResidentIndexRouteImport } from './routes/resident.index'
+import { Route as ResidentMaintenanceRouteImport } from './routes/resident.maintenance'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,42 +42,78 @@ const WatchmanRoute = WatchmanRouteImport.update({
   path: '/watchman',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResidentIndexRoute = ResidentIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ResidentRoute,
+} as any)
+const ResidentMaintenanceRoute = ResidentMaintenanceRouteImport.update({
+  id: '/maintenance',
+  path: '/maintenance',
+  getParentRoute: () => ResidentRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/login': typeof LoginRoute
-  '/resident': typeof ResidentRoute
+  '/resident': typeof ResidentRouteWithChildren
   '/watchman': typeof WatchmanRoute
+  '/resident/maintenance': typeof ResidentMaintenanceRoute
+  '/resident/': typeof ResidentIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/login': typeof LoginRoute
-  '/resident': typeof ResidentRoute
   '/watchman': typeof WatchmanRoute
+  '/resident/maintenance': typeof ResidentMaintenanceRoute
+  '/resident': typeof ResidentIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/login': typeof LoginRoute
-  '/resident': typeof ResidentRoute
+  '/resident': typeof ResidentRouteWithChildren
   '/watchman': typeof WatchmanRoute
+  '/resident/maintenance': typeof ResidentMaintenanceRoute
+  '/resident/': typeof ResidentIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/login' | '/resident' | '/watchman'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/resident'
+    | '/watchman'
+    | '/resident/maintenance'
+    | '/resident/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/login' | '/resident' | '/watchman'
-  id: '__root__' | '/' | '/admin' | '/login' | '/resident' | '/watchman'
+  to:
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/watchman'
+    | '/resident/maintenance'
+    | '/resident'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/resident'
+    | '/watchman'
+    | '/resident/maintenance'
+    | '/resident/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
   LoginRoute: typeof LoginRoute
-  ResidentRoute: typeof ResidentRoute
+  ResidentRoute: typeof ResidentRouteWithChildren
   WatchmanRoute: typeof WatchmanRoute
 }
 
@@ -116,14 +154,42 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WatchmanRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/resident/': {
+      id: '/resident/'
+      path: '/'
+      fullPath: '/resident/'
+      preLoaderRoute: typeof ResidentIndexRouteImport
+      parentRoute: typeof ResidentRoute
+    }
+    '/resident/maintenance': {
+      id: '/resident/maintenance'
+      path: '/maintenance'
+      fullPath: '/resident/maintenance'
+      preLoaderRoute: typeof ResidentMaintenanceRouteImport
+      parentRoute: typeof ResidentRoute
+    }
   }
 }
+
+interface ResidentRouteChildren {
+  ResidentMaintenanceRoute: typeof ResidentMaintenanceRoute
+  ResidentIndexRoute: typeof ResidentIndexRoute
+}
+
+const ResidentRouteChildren: ResidentRouteChildren = {
+  ResidentMaintenanceRoute: ResidentMaintenanceRoute,
+  ResidentIndexRoute: ResidentIndexRoute,
+}
+
+const ResidentRouteWithChildren = ResidentRoute._addFileChildren(
+  ResidentRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   LoginRoute: LoginRoute,
-  ResidentRoute: ResidentRoute,
+  ResidentRoute: ResidentRouteWithChildren,
   WatchmanRoute: WatchmanRoute,
 }
 export const routeTree = rootRouteImport
