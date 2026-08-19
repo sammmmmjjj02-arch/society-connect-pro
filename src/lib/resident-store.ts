@@ -7,10 +7,10 @@ export type MaintenanceRecord = {
   month: string;
   amount: number;
   status: MaintenanceStatus;
-  utr?: string;
-  submittedDate?: string;
-  paidDate?: string;
-  screenshotName?: string;
+  utr?: string | undefined;
+  submittedDate?: string | undefined;
+  paidDate?: string | undefined;
+  screenshotName?: string | undefined;
   rejectionReason?: string;
 };
 
