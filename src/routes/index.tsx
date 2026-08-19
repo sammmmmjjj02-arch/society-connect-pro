@@ -1,24 +1,52 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { SocietyLogo } from "@/components/society-layout";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "Sai Bhawani CHS Ltd — Society Management System" },
+      {
+        name: "description",
+        content:
+          "Secure society management portal for Sai Bhawani CHS Ltd residents, watchmen and administrators.",
+      },
+      { property: "og:title", content: "Sai Bhawani CHS Ltd — Society Management System" },
+      {
+        property: "og:description",
+        content: "Secure society management portal for residents, watchmen and administrators.",
+      },
+    ],
+  }),
+  component: Intro,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Intro() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const t = setTimeout(() => navigate({ to: "/login", replace: true }), 2200);
+    return () => clearTimeout(t);
+  }, [navigate]);
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="flex min-h-screen flex-col items-center justify-center bg-primary px-6 text-center">
+      <div className="animate-rise">
+        <SocietyLogo className="h-24 w-24 bg-card p-2 shadow-[var(--shadow-card)]" />
+      </div>
+      <h1
+        className="mt-8 font-heading text-4xl font-semibold tracking-wide text-primary-foreground animate-rise sm:text-6xl"
+        style={{ animationDelay: "0.15s" }}
+      >
+        SAI BHAWANI CHS LTD
+      </h1>
+      <div className="mt-6 h-px w-56 bg-accent animate-line" />
+      <p
+        className="mt-6 text-sm tracking-[0.3em] text-primary-foreground/70 animate-rise"
+        style={{ animationDelay: "0.5s" }}
+      >
+        SOCIETY MANAGEMENT SYSTEM
+      </p>
     </div>
   );
 }
