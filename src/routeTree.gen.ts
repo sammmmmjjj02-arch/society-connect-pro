@@ -14,6 +14,14 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ResidentRouteImport } from './routes/resident'
 import { Route as WatchmanRouteImport } from './routes/watchman'
+import { Route as ResidentIndexRouteImport } from './routes/resident.index'
+import { Route as ResidentComplaintsRouteImport } from './routes/resident.complaints'
+import { Route as ResidentMaintenanceRouteImport } from './routes/resident.maintenance'
+import { Route as ResidentNoticesRouteImport } from './routes/resident.notices'
+import { Route as ResidentProfileRouteImport } from './routes/resident.profile'
+import { Route as ResidentVehiclesRouteImport } from './routes/resident.vehicles'
+import { Route as ResidentMaintenanceIndexRouteImport } from './routes/resident.maintenance.index'
+import { Route as ResidentMaintenancePayRouteImport } from './routes/resident.maintenance.pay'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,42 +48,143 @@ const WatchmanRoute = WatchmanRouteImport.update({
   path: '/watchman',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResidentIndexRoute = ResidentIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ResidentRoute,
+} as any)
+const ResidentComplaintsRoute = ResidentComplaintsRouteImport.update({
+  id: '/complaints',
+  path: '/complaints',
+  getParentRoute: () => ResidentRoute,
+} as any)
+const ResidentMaintenanceRoute = ResidentMaintenanceRouteImport.update({
+  id: '/maintenance',
+  path: '/maintenance',
+  getParentRoute: () => ResidentRoute,
+} as any)
+const ResidentNoticesRoute = ResidentNoticesRouteImport.update({
+  id: '/notices',
+  path: '/notices',
+  getParentRoute: () => ResidentRoute,
+} as any)
+const ResidentProfileRoute = ResidentProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => ResidentRoute,
+} as any)
+const ResidentVehiclesRoute = ResidentVehiclesRouteImport.update({
+  id: '/vehicles',
+  path: '/vehicles',
+  getParentRoute: () => ResidentRoute,
+} as any)
+const ResidentMaintenanceIndexRoute =
+  ResidentMaintenanceIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => ResidentMaintenanceRoute,
+  } as any)
+const ResidentMaintenancePayRoute = ResidentMaintenancePayRouteImport.update({
+  id: '/pay',
+  path: '/pay',
+  getParentRoute: () => ResidentMaintenanceRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/login': typeof LoginRoute
-  '/resident': typeof ResidentRoute
+  '/resident': typeof ResidentRouteWithChildren
   '/watchman': typeof WatchmanRoute
+  '/resident/complaints': typeof ResidentComplaintsRoute
+  '/resident/maintenance': typeof ResidentMaintenanceRouteWithChildren
+  '/resident/notices': typeof ResidentNoticesRoute
+  '/resident/profile': typeof ResidentProfileRoute
+  '/resident/vehicles': typeof ResidentVehiclesRoute
+  '/resident/': typeof ResidentIndexRoute
+  '/resident/maintenance/pay': typeof ResidentMaintenancePayRoute
+  '/resident/maintenance/': typeof ResidentMaintenanceIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/login': typeof LoginRoute
-  '/resident': typeof ResidentRoute
   '/watchman': typeof WatchmanRoute
+  '/resident/complaints': typeof ResidentComplaintsRoute
+  '/resident/notices': typeof ResidentNoticesRoute
+  '/resident/profile': typeof ResidentProfileRoute
+  '/resident/vehicles': typeof ResidentVehiclesRoute
+  '/resident': typeof ResidentIndexRoute
+  '/resident/maintenance/pay': typeof ResidentMaintenancePayRoute
+  '/resident/maintenance': typeof ResidentMaintenanceIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/login': typeof LoginRoute
-  '/resident': typeof ResidentRoute
+  '/resident': typeof ResidentRouteWithChildren
   '/watchman': typeof WatchmanRoute
+  '/resident/complaints': typeof ResidentComplaintsRoute
+  '/resident/maintenance': typeof ResidentMaintenanceRouteWithChildren
+  '/resident/notices': typeof ResidentNoticesRoute
+  '/resident/profile': typeof ResidentProfileRoute
+  '/resident/vehicles': typeof ResidentVehiclesRoute
+  '/resident/': typeof ResidentIndexRoute
+  '/resident/maintenance/pay': typeof ResidentMaintenancePayRoute
+  '/resident/maintenance/': typeof ResidentMaintenanceIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/login' | '/resident' | '/watchman'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/resident'
+    | '/watchman'
+    | '/resident/complaints'
+    | '/resident/maintenance'
+    | '/resident/notices'
+    | '/resident/profile'
+    | '/resident/vehicles'
+    | '/resident/'
+    | '/resident/maintenance/pay'
+    | '/resident/maintenance/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/login' | '/resident' | '/watchman'
-  id: '__root__' | '/' | '/admin' | '/login' | '/resident' | '/watchman'
+  to:
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/watchman'
+    | '/resident/complaints'
+    | '/resident/notices'
+    | '/resident/profile'
+    | '/resident/vehicles'
+    | '/resident'
+    | '/resident/maintenance/pay'
+    | '/resident/maintenance'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/resident'
+    | '/watchman'
+    | '/resident/complaints'
+    | '/resident/maintenance'
+    | '/resident/notices'
+    | '/resident/profile'
+    | '/resident/vehicles'
+    | '/resident/'
+    | '/resident/maintenance/pay'
+    | '/resident/maintenance/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
   LoginRoute: typeof LoginRoute
-  ResidentRoute: typeof ResidentRoute
+  ResidentRoute: typeof ResidentRouteWithChildren
   WatchmanRoute: typeof WatchmanRoute
 }
 
@@ -116,14 +225,105 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WatchmanRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/resident/': {
+      id: '/resident/'
+      path: '/'
+      fullPath: '/resident/'
+      preLoaderRoute: typeof ResidentIndexRouteImport
+      parentRoute: typeof ResidentRoute
+    }
+    '/resident/complaints': {
+      id: '/resident/complaints'
+      path: '/complaints'
+      fullPath: '/resident/complaints'
+      preLoaderRoute: typeof ResidentComplaintsRouteImport
+      parentRoute: typeof ResidentRoute
+    }
+    '/resident/maintenance': {
+      id: '/resident/maintenance'
+      path: '/maintenance'
+      fullPath: '/resident/maintenance'
+      preLoaderRoute: typeof ResidentMaintenanceRouteImport
+      parentRoute: typeof ResidentRoute
+    }
+    '/resident/notices': {
+      id: '/resident/notices'
+      path: '/notices'
+      fullPath: '/resident/notices'
+      preLoaderRoute: typeof ResidentNoticesRouteImport
+      parentRoute: typeof ResidentRoute
+    }
+    '/resident/profile': {
+      id: '/resident/profile'
+      path: '/profile'
+      fullPath: '/resident/profile'
+      preLoaderRoute: typeof ResidentProfileRouteImport
+      parentRoute: typeof ResidentRoute
+    }
+    '/resident/vehicles': {
+      id: '/resident/vehicles'
+      path: '/vehicles'
+      fullPath: '/resident/vehicles'
+      preLoaderRoute: typeof ResidentVehiclesRouteImport
+      parentRoute: typeof ResidentRoute
+    }
+    '/resident/maintenance/': {
+      id: '/resident/maintenance/'
+      path: '/'
+      fullPath: '/resident/maintenance/'
+      preLoaderRoute: typeof ResidentMaintenanceIndexRouteImport
+      parentRoute: typeof ResidentMaintenanceRoute
+    }
+    '/resident/maintenance/pay': {
+      id: '/resident/maintenance/pay'
+      path: '/pay'
+      fullPath: '/resident/maintenance/pay'
+      preLoaderRoute: typeof ResidentMaintenancePayRouteImport
+      parentRoute: typeof ResidentMaintenanceRoute
+    }
   }
 }
+
+interface ResidentMaintenanceRouteChildren {
+  ResidentMaintenancePayRoute: typeof ResidentMaintenancePayRoute
+  ResidentMaintenanceIndexRoute: typeof ResidentMaintenanceIndexRoute
+}
+
+const ResidentMaintenanceRouteChildren: ResidentMaintenanceRouteChildren = {
+  ResidentMaintenancePayRoute: ResidentMaintenancePayRoute,
+  ResidentMaintenanceIndexRoute: ResidentMaintenanceIndexRoute,
+}
+
+const ResidentMaintenanceRouteWithChildren =
+  ResidentMaintenanceRoute._addFileChildren(ResidentMaintenanceRouteChildren)
+
+interface ResidentRouteChildren {
+  ResidentComplaintsRoute: typeof ResidentComplaintsRoute
+  ResidentMaintenanceRoute: typeof ResidentMaintenanceRouteWithChildren
+  ResidentNoticesRoute: typeof ResidentNoticesRoute
+  ResidentProfileRoute: typeof ResidentProfileRoute
+  ResidentVehiclesRoute: typeof ResidentVehiclesRoute
+  ResidentIndexRoute: typeof ResidentIndexRoute
+}
+
+const ResidentRouteChildren: ResidentRouteChildren = {
+  ResidentComplaintsRoute: ResidentComplaintsRoute,
+  ResidentMaintenanceRoute: ResidentMaintenanceRouteWithChildren,
+  ResidentNoticesRoute: ResidentNoticesRoute,
+  ResidentProfileRoute: ResidentProfileRoute,
+  ResidentVehiclesRoute: ResidentVehiclesRoute,
+  ResidentIndexRoute: ResidentIndexRoute,
+}
+
+const ResidentRouteWithChildren = ResidentRoute._addFileChildren(
+  ResidentRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   LoginRoute: LoginRoute,
-  ResidentRoute: ResidentRoute,
+  ResidentRoute: ResidentRouteWithChildren,
   WatchmanRoute: WatchmanRoute,
 }
 export const routeTree = rootRouteImport
