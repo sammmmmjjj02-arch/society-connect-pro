@@ -1,40 +1,23 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Card } from "@/components/kit";
-import { DashboardLayout, PlaceholderGrid } from "@/components/society-layout";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { DashboardLayout, type NavItem } from "@/components/society-layout";
 
-const items = [
-  { label: "Dashboard" },
-  { label: "Maintenance" },
-  { label: "Payment" },
-  { label: "Payment History" },
-  { label: "Complaints" },
-  { label: "Vehicle Search" },
-  { label: "Notices" },
-  { label: "Profile" },
+export const residentNav: NavItem[] = [
+  { label: "Dashboard", to: "/resident", exact: true },
+  { label: "Maintenance", to: "/resident/maintenance" },
+  { label: "Complaints", to: "/resident/complaints" },
+  { label: "Vehicle Search", to: "/resident/vehicles" },
+  { label: "Notices", to: "/resident/notices" },
+  { label: "Profile", to: "/resident/profile" },
 ];
 
 export const Route = createFileRoute("/resident")({
-  head: () => ({
-    meta: [
-      { title: "Resident Dashboard — Sai Bhawani CHS Ltd" },
-      { name: "description", content: "Resident portal for maintenance, payments, complaints and notices." },
-      { property: "og:title", content: "Resident Dashboard — Sai Bhawani CHS Ltd" },
-      { property: "og:description", content: "Resident portal for maintenance, payments and notices." },
-    ],
-  }),
-  component: ResidentDashboard,
+  component: ResidentLayout,
 });
 
-function ResidentDashboard() {
+function ResidentLayout() {
   return (
-    <DashboardLayout role="Resident" navItems={items}>
-      <Card title="Welcome, Resident" subtitle="Your society services will appear here." className="mb-6">
-        <p className="text-sm text-muted-foreground">
-          This is a placeholder dashboard. Maintenance, payments, complaints and notices will be added in
-          upcoming releases.
-        </p>
-      </Card>
-      <PlaceholderGrid items={items.slice(1)} />
+    <DashboardLayout role="Resident" navItems={residentNav}>
+      <Outlet />
     </DashboardLayout>
   );
 }
