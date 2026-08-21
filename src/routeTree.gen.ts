@@ -21,6 +21,7 @@ import { Route as ResidentNoticesRouteImport } from './routes/resident.notices'
 import { Route as ResidentProfileRouteImport } from './routes/resident.profile'
 import { Route as ResidentVehiclesRouteImport } from './routes/resident.vehicles'
 import { Route as WatchmanIndexRouteImport } from './routes/watchman.index'
+import { Route as WatchmanParcelsRouteImport } from './routes/watchman.parcels'
 import { Route as ResidentMaintenanceIndexRouteImport } from './routes/resident.maintenance.index'
 import { Route as ResidentMaintenancePayRouteImport } from './routes/resident.maintenance.pay'
 
@@ -84,6 +85,11 @@ const WatchmanIndexRoute = WatchmanIndexRouteImport.update({
   path: '/',
   getParentRoute: () => WatchmanRoute,
 } as any)
+const WatchmanParcelsRoute = WatchmanParcelsRouteImport.update({
+  id: '/parcels',
+  path: '/parcels',
+  getParentRoute: () => WatchmanRoute,
+} as any)
 const ResidentMaintenanceIndexRoute =
   ResidentMaintenanceIndexRouteImport.update({
     id: '/',
@@ -107,6 +113,7 @@ export interface FileRoutesByFullPath {
   '/resident/notices': typeof ResidentNoticesRoute
   '/resident/profile': typeof ResidentProfileRoute
   '/resident/vehicles': typeof ResidentVehiclesRoute
+  '/watchman/parcels': typeof WatchmanParcelsRoute
   '/resident/': typeof ResidentIndexRoute
   '/watchman/': typeof WatchmanIndexRoute
   '/resident/maintenance/pay': typeof ResidentMaintenancePayRoute
@@ -120,6 +127,7 @@ export interface FileRoutesByTo {
   '/resident/notices': typeof ResidentNoticesRoute
   '/resident/profile': typeof ResidentProfileRoute
   '/resident/vehicles': typeof ResidentVehiclesRoute
+  '/watchman/parcels': typeof WatchmanParcelsRoute
   '/resident': typeof ResidentIndexRoute
   '/watchman': typeof WatchmanIndexRoute
   '/resident/maintenance/pay': typeof ResidentMaintenancePayRoute
@@ -137,6 +145,7 @@ export interface FileRoutesById {
   '/resident/notices': typeof ResidentNoticesRoute
   '/resident/profile': typeof ResidentProfileRoute
   '/resident/vehicles': typeof ResidentVehiclesRoute
+  '/watchman/parcels': typeof WatchmanParcelsRoute
   '/resident/': typeof ResidentIndexRoute
   '/watchman/': typeof WatchmanIndexRoute
   '/resident/maintenance/pay': typeof ResidentMaintenancePayRoute
@@ -155,6 +164,7 @@ export interface FileRouteTypes {
     | '/resident/notices'
     | '/resident/profile'
     | '/resident/vehicles'
+    | '/watchman/parcels'
     | '/resident/'
     | '/watchman/'
     | '/resident/maintenance/pay'
@@ -168,6 +178,7 @@ export interface FileRouteTypes {
     | '/resident/notices'
     | '/resident/profile'
     | '/resident/vehicles'
+    | '/watchman/parcels'
     | '/resident'
     | '/watchman'
     | '/resident/maintenance/pay'
@@ -184,6 +195,7 @@ export interface FileRouteTypes {
     | '/resident/notices'
     | '/resident/profile'
     | '/resident/vehicles'
+    | '/watchman/parcels'
     | '/resident/'
     | '/watchman/'
     | '/resident/maintenance/pay'
@@ -284,6 +296,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WatchmanIndexRouteImport
       parentRoute: typeof WatchmanRoute
     }
+    '/watchman/parcels': {
+      id: '/watchman/parcels'
+      path: '/parcels'
+      fullPath: '/watchman/parcels'
+      preLoaderRoute: typeof WatchmanParcelsRouteImport
+      parentRoute: typeof WatchmanRoute
+    }
     '/resident/maintenance/': {
       id: '/resident/maintenance/'
       path: '/'
@@ -337,10 +356,12 @@ const ResidentRouteWithChildren = ResidentRoute._addFileChildren(
 )
 
 interface WatchmanRouteChildren {
+  WatchmanParcelsRoute: typeof WatchmanParcelsRoute
   WatchmanIndexRoute: typeof WatchmanIndexRoute
 }
 
 const WatchmanRouteChildren: WatchmanRouteChildren = {
+  WatchmanParcelsRoute: WatchmanParcelsRoute,
   WatchmanIndexRoute: WatchmanIndexRoute,
 }
 
