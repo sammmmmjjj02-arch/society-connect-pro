@@ -43,7 +43,7 @@ function WatchmanDashboard() {
             <p className="mt-1 text-sm text-muted-foreground">{now}</p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <Link to="/watchman/parcels" search={{ add: true }}>
+            <Link to="/watchman/parcels">
               <Button size="lg" className="w-full sm:w-auto">
                 Add Parcel
               </Button>
