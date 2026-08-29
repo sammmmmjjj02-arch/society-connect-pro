@@ -5,6 +5,7 @@ import {
   notices as seedNotices,
   rejectResidentMaintenance,
   resident,
+  useResidentState,
   type MaintenanceRecord,
 } from "@/lib/resident-store";
 
@@ -331,4 +332,16 @@ export function residentLedger(records: MaintenanceRecord[]): MaintenanceRow[] {
     amount: m.amount,
     status: m.status,
   }));
+}
+
+export function useAllPayments(): AdminPayment[] {
+  const { payments } = useAdminState();
+  const { maintenance } = useResidentState();
+  return [...residentPayments(maintenance), ...payments];
+}
+
+export function useLedger(): MaintenanceRow[] {
+  const { ledger } = useAdminState();
+  const { maintenance } = useResidentState();
+  return [...residentLedger(maintenance), ...ledger];
 }
