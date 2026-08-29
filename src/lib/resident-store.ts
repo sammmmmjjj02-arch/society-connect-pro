@@ -169,3 +169,39 @@ export const statusLabel: Record<MaintenanceStatus, string> = {
 export function formatINR(value: number) {
   return `₹${value.toLocaleString("en-IN")}`;
 }
+
+/* ---------- committee (admin) actions on resident maintenance ---------- */
+function todayLabel() {
+  return new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+}
+
+export function approveResidentMaintenance(id: string, receiptNo: string) {
+  const today = todayLabel();
+  state = {
+    ...state,
+    maintenance: state.maintenance.map((m) =>
+      m.id === id
+        ? { ...m, status: "paid", paidDate: today, approvedDate: today, receiptNo, rejectionReason: undefined }
+        : m,
+    ),
+  };
+  emit();
+}
+
+export function rejectResidentMaintenance(id: string, reason: string) {
+  state = {
+    ...state,
+    maintenance: state.maintenance.map((m) =>
+      m.id === id ? { ...m, status: "rejected", rejectionReason: reason } : m,
+    ),
+  };
+  emit();
+}
+
+export function setComplaintStatus(id: string, status: Complaint["status"]) {
+  state = {
+    ...state,
+    complaints: state.complaints.map((c) => (c.id === id ? { ...c, status } : c)),
+  };
+  emit();
+}
