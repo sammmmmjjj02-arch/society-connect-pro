@@ -1,41 +1,26 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Card } from "@/components/kit";
-import { DashboardLayout, PlaceholderGrid } from "@/components/society-layout";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { DashboardLayout, type NavItem } from "@/components/society-layout";
 
-const items = [
-  { label: "Dashboard" },
-  { label: "Residents" },
-  { label: "Flats" },
-  { label: "Maintenance" },
-  { label: "Payment Verification" },
-  { label: "Complaints" },
-  { label: "Vehicles" },
-  { label: "Notices" },
-  { label: "Profile" },
+export const adminNav: NavItem[] = [
+  { label: "Dashboard", to: "/admin", exact: true },
+  { label: "Residents", to: "/admin/residents" },
+  { label: "Flats", to: "/admin/flats" },
+  { label: "Maintenance", to: "/admin/maintenance" },
+  { label: "Payment Verification", to: "/admin/payments" },
+  { label: "Complaints", to: "/admin/complaints" },
+  { label: "Vehicles", to: "/admin/vehicles" },
+  { label: "Notices", to: "/admin/notices" },
+  { label: "Profile", to: "/admin/profile" },
 ];
 
 export const Route = createFileRoute("/admin")({
-  head: () => ({
-    meta: [
-      { title: "Admin Dashboard — Sai Bhawani CHS Ltd" },
-      { name: "description", content: "Committee portal for residents, flats, maintenance and notices." },
-      { property: "og:title", content: "Admin Dashboard — Sai Bhawani CHS Ltd" },
-      { property: "og:description", content: "Committee portal for residents, flats and maintenance." },
-    ],
-  }),
-  component: AdminDashboard,
+  component: AdminLayout,
 });
 
-function AdminDashboard() {
+function AdminLayout() {
   return (
-    <DashboardLayout role="Admin" navItems={items}>
-      <Card title="Welcome, Admin" subtitle="Society administration tools will appear here." className="mb-6">
-        <p className="text-sm text-muted-foreground">
-          This is a placeholder dashboard. Resident records, maintenance, payment verification and notices
-          will be added in upcoming releases.
-        </p>
-      </Card>
-      <PlaceholderGrid items={items.slice(1)} />
+    <DashboardLayout role="Admin" navItems={adminNav}>
+      <Outlet />
     </DashboardLayout>
   );
 }
