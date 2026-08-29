@@ -12,6 +12,8 @@ export type MaintenanceRecord = {
   paidDate?: string | undefined;
   screenshotName?: string | undefined;
   rejectionReason?: string | undefined;
+  approvedDate?: string | undefined;
+  receiptNo?: string | undefined;
 };
 
 export type Complaint = {
