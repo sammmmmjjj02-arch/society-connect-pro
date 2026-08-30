@@ -17,6 +17,7 @@ import { Route as WatchmanRouteImport } from './routes/watchman'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminFlatsRouteImport } from './routes/admin.flats'
 import { Route as AdminMaintenanceRouteImport } from './routes/admin.maintenance'
+import { Route as AdminPaymentsRouteImport } from './routes/admin.payments'
 import { Route as AdminResidentsRouteImport } from './routes/admin.residents'
 import { Route as ResidentIndexRouteImport } from './routes/resident.index'
 import { Route as ResidentComplaintsRouteImport } from './routes/resident.complaints'
@@ -69,6 +70,11 @@ const AdminFlatsRoute = AdminFlatsRouteImport.update({
 const AdminMaintenanceRoute = AdminMaintenanceRouteImport.update({
   id: '/maintenance',
   path: '/maintenance',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPaymentsRoute = AdminPaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminResidentsRoute = AdminResidentsRouteImport.update({
@@ -146,6 +152,7 @@ export interface FileRoutesByFullPath {
   '/watchman': typeof WatchmanRouteWithChildren
   '/admin/flats': typeof AdminFlatsRoute
   '/admin/maintenance': typeof AdminMaintenanceRoute
+  '/admin/payments': typeof AdminPaymentsRoute
   '/admin/residents': typeof AdminResidentsRoute
   '/resident/complaints': typeof ResidentComplaintsRoute
   '/resident/maintenance': typeof ResidentMaintenanceRouteWithChildren
@@ -166,6 +173,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/admin/flats': typeof AdminFlatsRoute
   '/admin/maintenance': typeof AdminMaintenanceRoute
+  '/admin/payments': typeof AdminPaymentsRoute
   '/admin/residents': typeof AdminResidentsRoute
   '/resident/complaints': typeof ResidentComplaintsRoute
   '/resident/notices': typeof ResidentNoticesRoute
@@ -189,6 +197,7 @@ export interface FileRoutesById {
   '/watchman': typeof WatchmanRouteWithChildren
   '/admin/flats': typeof AdminFlatsRoute
   '/admin/maintenance': typeof AdminMaintenanceRoute
+  '/admin/payments': typeof AdminPaymentsRoute
   '/admin/residents': typeof AdminResidentsRoute
   '/resident/complaints': typeof ResidentComplaintsRoute
   '/resident/maintenance': typeof ResidentMaintenanceRouteWithChildren
@@ -214,6 +223,7 @@ export interface FileRouteTypes {
     | '/watchman'
     | '/admin/flats'
     | '/admin/maintenance'
+    | '/admin/payments'
     | '/admin/residents'
     | '/resident/complaints'
     | '/resident/maintenance'
@@ -234,6 +244,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/admin/flats'
     | '/admin/maintenance'
+    | '/admin/payments'
     | '/admin/residents'
     | '/resident/complaints'
     | '/resident/notices'
@@ -256,6 +267,7 @@ export interface FileRouteTypes {
     | '/watchman'
     | '/admin/flats'
     | '/admin/maintenance'
+    | '/admin/payments'
     | '/admin/residents'
     | '/resident/complaints'
     | '/resident/maintenance'
@@ -336,6 +348,13 @@ declare module '@tanstack/react-router' {
       path: '/maintenance'
       fullPath: '/admin/maintenance'
       preLoaderRoute: typeof AdminMaintenanceRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/payments': {
+      id: '/admin/payments'
+      path: '/payments'
+      fullPath: '/admin/payments'
+      preLoaderRoute: typeof AdminPaymentsRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/residents': {
@@ -435,6 +454,7 @@ declare module '@tanstack/react-router' {
 interface AdminRouteChildren {
   AdminFlatsRoute: typeof AdminFlatsRoute
   AdminMaintenanceRoute: typeof AdminMaintenanceRoute
+  AdminPaymentsRoute: typeof AdminPaymentsRoute
   AdminResidentsRoute: typeof AdminResidentsRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
@@ -442,6 +462,7 @@ interface AdminRouteChildren {
 const AdminRouteChildren: AdminRouteChildren = {
   AdminFlatsRoute: AdminFlatsRoute,
   AdminMaintenanceRoute: AdminMaintenanceRoute,
+  AdminPaymentsRoute: AdminPaymentsRoute,
   AdminResidentsRoute: AdminResidentsRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
