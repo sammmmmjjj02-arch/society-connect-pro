@@ -15,6 +15,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as ResidentRouteImport } from './routes/resident'
 import { Route as WatchmanRouteImport } from './routes/watchman'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminResidentsRouteImport } from './routes/admin.residents'
 import { Route as ResidentIndexRouteImport } from './routes/resident.index'
 import { Route as ResidentComplaintsRouteImport } from './routes/resident.complaints'
 import { Route as ResidentMaintenanceRouteImport } from './routes/resident.maintenance'
@@ -56,6 +57,11 @@ const WatchmanRoute = WatchmanRouteImport.update({
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminResidentsRoute = AdminResidentsRouteImport.update({
+  id: '/residents',
+  path: '/residents',
   getParentRoute: () => AdminRoute,
 } as any)
 const ResidentIndexRoute = ResidentIndexRouteImport.update({
@@ -126,6 +132,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/resident': typeof ResidentRouteWithChildren
   '/watchman': typeof WatchmanRouteWithChildren
+  '/admin/residents': typeof AdminResidentsRoute
   '/resident/complaints': typeof ResidentComplaintsRoute
   '/resident/maintenance': typeof ResidentMaintenanceRouteWithChildren
   '/resident/notices': typeof ResidentNoticesRoute
@@ -143,6 +150,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/admin/residents': typeof AdminResidentsRoute
   '/resident/complaints': typeof ResidentComplaintsRoute
   '/resident/notices': typeof ResidentNoticesRoute
   '/resident/profile': typeof ResidentProfileRoute
@@ -163,6 +171,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/resident': typeof ResidentRouteWithChildren
   '/watchman': typeof WatchmanRouteWithChildren
+  '/admin/residents': typeof AdminResidentsRoute
   '/resident/complaints': typeof ResidentComplaintsRoute
   '/resident/maintenance': typeof ResidentMaintenanceRouteWithChildren
   '/resident/notices': typeof ResidentNoticesRoute
@@ -185,6 +194,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/resident'
     | '/watchman'
+    | '/admin/residents'
     | '/resident/complaints'
     | '/resident/maintenance'
     | '/resident/notices'
@@ -202,6 +212,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/login'
+    | '/admin/residents'
     | '/resident/complaints'
     | '/resident/notices'
     | '/resident/profile'
@@ -221,6 +232,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/resident'
     | '/watchman'
+    | '/admin/residents'
     | '/resident/complaints'
     | '/resident/maintenance'
     | '/resident/notices'
@@ -286,6 +298,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/residents': {
+      id: '/admin/residents'
+      path: '/residents'
+      fullPath: '/admin/residents'
+      preLoaderRoute: typeof AdminResidentsRouteImport
       parentRoute: typeof AdminRoute
     }
     '/resident/': {
@@ -376,10 +395,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
+  AdminResidentsRoute: typeof AdminResidentsRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminResidentsRoute: AdminResidentsRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
