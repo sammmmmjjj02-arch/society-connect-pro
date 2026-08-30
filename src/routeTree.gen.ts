@@ -30,6 +30,7 @@ import { Route as WatchmanParcelsRouteImport } from './routes/watchman.parcels'
 import { Route as WatchmanProfileRouteImport } from './routes/watchman.profile'
 import { Route as WatchmanVehiclesRouteImport } from './routes/watchman.vehicles'
 import { Route as AdminPaymentsIndexRouteImport } from './routes/admin.payments.index'
+import { Route as AdminPaymentsPaymentIdRouteImport } from './routes/admin.payments.$paymentId'
 import { Route as ResidentMaintenanceIndexRouteImport } from './routes/resident.maintenance.index'
 import { Route as ResidentMaintenancePayRouteImport } from './routes/resident.maintenance.pay'
 
@@ -138,6 +139,11 @@ const AdminPaymentsIndexRoute = AdminPaymentsIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminPaymentsRoute,
 } as any)
+const AdminPaymentsPaymentIdRoute = AdminPaymentsPaymentIdRouteImport.update({
+  id: '/$paymentId',
+  path: '/$paymentId',
+  getParentRoute: () => AdminPaymentsRoute,
+} as any)
 const ResidentMaintenanceIndexRoute =
   ResidentMaintenanceIndexRouteImport.update({
     id: '/',
@@ -171,6 +177,7 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AdminIndexRoute
   '/resident/': typeof ResidentIndexRoute
   '/watchman/': typeof WatchmanIndexRoute
+  '/admin/payments/$paymentId': typeof AdminPaymentsPaymentIdRoute
   '/resident/maintenance/pay': typeof ResidentMaintenancePayRoute
   '/admin/payments/': typeof AdminPaymentsIndexRoute
   '/resident/maintenance/': typeof ResidentMaintenanceIndexRoute
@@ -191,6 +198,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminIndexRoute
   '/resident': typeof ResidentIndexRoute
   '/watchman': typeof WatchmanIndexRoute
+  '/admin/payments/$paymentId': typeof AdminPaymentsPaymentIdRoute
   '/resident/maintenance/pay': typeof ResidentMaintenancePayRoute
   '/admin/payments': typeof AdminPaymentsIndexRoute
   '/resident/maintenance': typeof ResidentMaintenanceIndexRoute
@@ -217,6 +225,7 @@ export interface FileRoutesById {
   '/admin/': typeof AdminIndexRoute
   '/resident/': typeof ResidentIndexRoute
   '/watchman/': typeof WatchmanIndexRoute
+  '/admin/payments/$paymentId': typeof AdminPaymentsPaymentIdRoute
   '/resident/maintenance/pay': typeof ResidentMaintenancePayRoute
   '/admin/payments/': typeof AdminPaymentsIndexRoute
   '/resident/maintenance/': typeof ResidentMaintenanceIndexRoute
@@ -244,6 +253,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/resident/'
     | '/watchman/'
+    | '/admin/payments/$paymentId'
     | '/resident/maintenance/pay'
     | '/admin/payments/'
     | '/resident/maintenance/'
@@ -264,6 +274,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/resident'
     | '/watchman'
+    | '/admin/payments/$paymentId'
     | '/resident/maintenance/pay'
     | '/admin/payments'
     | '/resident/maintenance'
@@ -289,6 +300,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/resident/'
     | '/watchman/'
+    | '/admin/payments/$paymentId'
     | '/resident/maintenance/pay'
     | '/admin/payments/'
     | '/resident/maintenance/'
@@ -451,6 +463,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPaymentsIndexRouteImport
       parentRoute: typeof AdminPaymentsRoute
     }
+    '/admin/payments/$paymentId': {
+      id: '/admin/payments/$paymentId'
+      path: '/$paymentId'
+      fullPath: '/admin/payments/$paymentId'
+      preLoaderRoute: typeof AdminPaymentsPaymentIdRouteImport
+      parentRoute: typeof AdminPaymentsRoute
+    }
     '/resident/maintenance/': {
       id: '/resident/maintenance/'
       path: '/'
@@ -469,10 +488,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminPaymentsRouteChildren {
+  AdminPaymentsPaymentIdRoute: typeof AdminPaymentsPaymentIdRoute
   AdminPaymentsIndexRoute: typeof AdminPaymentsIndexRoute
 }
 
 const AdminPaymentsRouteChildren: AdminPaymentsRouteChildren = {
+  AdminPaymentsPaymentIdRoute: AdminPaymentsPaymentIdRoute,
   AdminPaymentsIndexRoute: AdminPaymentsIndexRoute,
 }
 
