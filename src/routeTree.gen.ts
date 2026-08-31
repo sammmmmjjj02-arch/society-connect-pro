@@ -18,8 +18,11 @@ import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminComplaintsRouteImport } from './routes/admin.complaints'
 import { Route as AdminFlatsRouteImport } from './routes/admin.flats'
 import { Route as AdminMaintenanceRouteImport } from './routes/admin.maintenance'
+import { Route as AdminNoticesRouteImport } from './routes/admin.notices'
 import { Route as AdminPaymentsRouteImport } from './routes/admin.payments'
+import { Route as AdminProfileRouteImport } from './routes/admin.profile'
 import { Route as AdminResidentsRouteImport } from './routes/admin.residents'
+import { Route as AdminVehiclesRouteImport } from './routes/admin.vehicles'
 import { Route as ResidentIndexRouteImport } from './routes/resident.index'
 import { Route as ResidentComplaintsRouteImport } from './routes/resident.complaints'
 import { Route as ResidentMaintenanceRouteImport } from './routes/resident.maintenance'
@@ -80,14 +83,29 @@ const AdminMaintenanceRoute = AdminMaintenanceRouteImport.update({
   path: '/maintenance',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminNoticesRoute = AdminNoticesRouteImport.update({
+  id: '/notices',
+  path: '/notices',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminPaymentsRoute = AdminPaymentsRouteImport.update({
   id: '/payments',
   path: '/payments',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminProfileRoute = AdminProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminResidentsRoute = AdminResidentsRouteImport.update({
   id: '/residents',
   path: '/residents',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminVehiclesRoute = AdminVehiclesRouteImport.update({
+  id: '/vehicles',
+  path: '/vehicles',
   getParentRoute: () => AdminRoute,
 } as any)
 const ResidentIndexRoute = ResidentIndexRouteImport.update({
@@ -171,8 +189,11 @@ export interface FileRoutesByFullPath {
   '/admin/complaints': typeof AdminComplaintsRoute
   '/admin/flats': typeof AdminFlatsRoute
   '/admin/maintenance': typeof AdminMaintenanceRoute
+  '/admin/notices': typeof AdminNoticesRoute
   '/admin/payments': typeof AdminPaymentsRouteWithChildren
+  '/admin/profile': typeof AdminProfileRoute
   '/admin/residents': typeof AdminResidentsRoute
+  '/admin/vehicles': typeof AdminVehiclesRoute
   '/resident/complaints': typeof ResidentComplaintsRoute
   '/resident/maintenance': typeof ResidentMaintenanceRouteWithChildren
   '/resident/notices': typeof ResidentNoticesRoute
@@ -195,7 +216,10 @@ export interface FileRoutesByTo {
   '/admin/complaints': typeof AdminComplaintsRoute
   '/admin/flats': typeof AdminFlatsRoute
   '/admin/maintenance': typeof AdminMaintenanceRoute
+  '/admin/notices': typeof AdminNoticesRoute
+  '/admin/profile': typeof AdminProfileRoute
   '/admin/residents': typeof AdminResidentsRoute
+  '/admin/vehicles': typeof AdminVehiclesRoute
   '/resident/complaints': typeof ResidentComplaintsRoute
   '/resident/notices': typeof ResidentNoticesRoute
   '/resident/profile': typeof ResidentProfileRoute
@@ -221,8 +245,11 @@ export interface FileRoutesById {
   '/admin/complaints': typeof AdminComplaintsRoute
   '/admin/flats': typeof AdminFlatsRoute
   '/admin/maintenance': typeof AdminMaintenanceRoute
+  '/admin/notices': typeof AdminNoticesRoute
   '/admin/payments': typeof AdminPaymentsRouteWithChildren
+  '/admin/profile': typeof AdminProfileRoute
   '/admin/residents': typeof AdminResidentsRoute
+  '/admin/vehicles': typeof AdminVehiclesRoute
   '/resident/complaints': typeof ResidentComplaintsRoute
   '/resident/maintenance': typeof ResidentMaintenanceRouteWithChildren
   '/resident/notices': typeof ResidentNoticesRoute
@@ -250,8 +277,11 @@ export interface FileRouteTypes {
     | '/admin/complaints'
     | '/admin/flats'
     | '/admin/maintenance'
+    | '/admin/notices'
     | '/admin/payments'
+    | '/admin/profile'
     | '/admin/residents'
+    | '/admin/vehicles'
     | '/resident/complaints'
     | '/resident/maintenance'
     | '/resident/notices'
@@ -274,7 +304,10 @@ export interface FileRouteTypes {
     | '/admin/complaints'
     | '/admin/flats'
     | '/admin/maintenance'
+    | '/admin/notices'
+    | '/admin/profile'
     | '/admin/residents'
+    | '/admin/vehicles'
     | '/resident/complaints'
     | '/resident/notices'
     | '/resident/profile'
@@ -299,8 +332,11 @@ export interface FileRouteTypes {
     | '/admin/complaints'
     | '/admin/flats'
     | '/admin/maintenance'
+    | '/admin/notices'
     | '/admin/payments'
+    | '/admin/profile'
     | '/admin/residents'
+    | '/admin/vehicles'
     | '/resident/complaints'
     | '/resident/maintenance'
     | '/resident/notices'
@@ -391,6 +427,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminMaintenanceRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/notices': {
+      id: '/admin/notices'
+      path: '/notices'
+      fullPath: '/admin/notices'
+      preLoaderRoute: typeof AdminNoticesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/payments': {
       id: '/admin/payments'
       path: '/payments'
@@ -398,11 +441,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPaymentsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/profile': {
+      id: '/admin/profile'
+      path: '/profile'
+      fullPath: '/admin/profile'
+      preLoaderRoute: typeof AdminProfileRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/residents': {
       id: '/admin/residents'
       path: '/residents'
       fullPath: '/admin/residents'
       preLoaderRoute: typeof AdminResidentsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/vehicles': {
+      id: '/admin/vehicles'
+      path: '/vehicles'
+      fullPath: '/admin/vehicles'
+      preLoaderRoute: typeof AdminVehiclesRouteImport
       parentRoute: typeof AdminRoute
     }
     '/resident/': {
@@ -524,8 +581,11 @@ interface AdminRouteChildren {
   AdminComplaintsRoute: typeof AdminComplaintsRoute
   AdminFlatsRoute: typeof AdminFlatsRoute
   AdminMaintenanceRoute: typeof AdminMaintenanceRoute
+  AdminNoticesRoute: typeof AdminNoticesRoute
   AdminPaymentsRoute: typeof AdminPaymentsRouteWithChildren
+  AdminProfileRoute: typeof AdminProfileRoute
   AdminResidentsRoute: typeof AdminResidentsRoute
+  AdminVehiclesRoute: typeof AdminVehiclesRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
@@ -533,8 +593,11 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminComplaintsRoute: AdminComplaintsRoute,
   AdminFlatsRoute: AdminFlatsRoute,
   AdminMaintenanceRoute: AdminMaintenanceRoute,
+  AdminNoticesRoute: AdminNoticesRoute,
   AdminPaymentsRoute: AdminPaymentsRouteWithChildren,
+  AdminProfileRoute: AdminProfileRoute,
   AdminResidentsRoute: AdminResidentsRoute,
+  AdminVehiclesRoute: AdminVehiclesRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
