@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Badge, Button, Card } from "@/components/kit";
-import { notices } from "@/lib/resident-store";
+import { useNotices, type Notice } from "@/lib/admin-store";
 
 export const Route = createFileRoute("/resident/notices")({
   head: () => ({
@@ -16,7 +16,8 @@ export const Route = createFileRoute("/resident/notices")({
 });
 
 function NoticesPage() {
-  const [open, setOpen] = useState<(typeof notices)[number] | null>(null);
+  const notices = useNotices();
+  const [open, setOpen] = useState<Notice | null>(null);
 
   return (
     <div className="space-y-6">

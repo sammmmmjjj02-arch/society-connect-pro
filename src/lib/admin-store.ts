@@ -312,8 +312,11 @@ export function residentPayments(records: MaintenanceRecord[]): AdminPayment[] {
       utr: m.utr as string,
       paymentDate: m.submittedDate,
       submittedDate: m.submittedDate ?? "",
-      status:
-        m.status === "paid" ? "Approved" : m.status === "rejected" ? "Rejected" : "Verification Pending",
+      status: (m.status === "paid"
+        ? "Approved"
+        : m.status === "rejected"
+          ? "Rejected"
+          : "Verification Pending") as PaymentStatus,
       rejectionReason: m.rejectionReason,
       approvedDate: m.approvedDate ?? m.paidDate,
       receiptNo: m.receiptNo,
