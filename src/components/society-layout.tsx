@@ -1,13 +1,12 @@
 import { useState, type ReactNode } from "react";
 import { Link, useNavigate, type LinkProps } from "@tanstack/react-router";
-import logo from "@/assets/website_logo.svg.asset.json";
 import { Badge, Button, PageContainer } from "@/components/kit";
 import { cn } from "@/lib/utils";
 
 export function SocietyLogo({ className }: { className?: string }) {
   return (
     <img
-      src={logo.url}
+      src="/logo.svg"
       alt="Sai Bhawani CHS Ltd logo"
       className={cn("h-12 w-12 rounded-full object-contain", className)}
     />
@@ -76,7 +75,6 @@ export function DashboardLayout({
 
   return (
     <div className="min-h-screen bg-secondary">
-      {/* Header */}
       <header className="sticky top-0 z-20 border-b border-primary/10 bg-card/95 shadow-sm backdrop-blur">
         <div className="mx-auto flex w-full max-w-6xl items-center gap-3 px-4 py-3 sm:gap-4 sm:px-6 lg:px-8">
           <Button
@@ -112,7 +110,6 @@ export function DashboardLayout({
         </div>
       </header>
 
-      {/* Mobile navigation */}
       {open ? (
         <div className="fixed inset-x-0 top-[65px] z-30 border-b border-primary/10 bg-card p-3 shadow-lg lg:hidden">
           {nav}
@@ -120,7 +117,6 @@ export function DashboardLayout({
       ) : null}
 
       <div className="mx-auto flex w-full max-w-6xl gap-6 px-4 sm:px-6 lg:px-8">
-        {/* Desktop sidebar */}
         <aside className="hidden w-60 shrink-0 py-8 lg:block">
           <div className="sticky top-24 overflow-hidden rounded-xl border border-primary/10 bg-card shadow-[var(--shadow-card)]">
             <div className="border-b border-border bg-primary px-4 py-4">
@@ -136,7 +132,6 @@ export function DashboardLayout({
           </div>
         </aside>
 
-        {/* Main content */}
         <main className="min-w-0 flex-1">
           <PageContainer className="px-0 sm:px-0 lg:px-0">
             {children}
@@ -144,7 +139,6 @@ export function DashboardLayout({
         </main>
       </div>
 
-      {/* Footer */}
       <footer className="mt-8 border-t border-primary/10 bg-primary px-4 py-8 text-center text-sm text-primary-foreground sm:px-6">
         <p className="font-heading text-xl">
           © {new Date().getFullYear()} Sai Bhawani CHS Ltd
